@@ -9,12 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ajay</groupId>
-	<artifactId>spring-security</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>blog-app</artifactId>
+	<version>0.0.1</version>
+	<name>blog-app</name>
+	<description>Blog App</description>
 	<properties>
 		<java.version>22</java.version>
+		<maven.compiler.source>22</maven.compiler.source>
+		<maven.compiler.target>22</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
