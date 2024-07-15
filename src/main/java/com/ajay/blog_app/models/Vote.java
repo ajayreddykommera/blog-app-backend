@@ -1,19 +1,25 @@
 package com.ajay.blog_app.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+@Entity
+@Table(name = "votes")
 @Data
-@Document(collection = "votes")
 public class Vote {
 
     @Id
-    private String voteId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long voteId;
+
+    @Column(nullable = false)
     private boolean isLike;
-    @DBRef
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "voted_by")
     private User votedBy;
-    @DBRef
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
     private Post post;
 }

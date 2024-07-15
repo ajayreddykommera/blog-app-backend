@@ -21,7 +21,6 @@ public class RolesController {
     private final RolesService rolesService;
 
     @GetMapping("/getAllRoles")
-    @PreAuthorize("hasRole('NORMAL_USER') or hasRole('ADMIN')")
     public ResponseEntity<List<Role>> getAllRole() {
 
         List<Role> response = rolesService.getAllRoles();
@@ -30,7 +29,6 @@ public class RolesController {
 
 
     @PostMapping("/addRole")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> addRole(@RequestBody @Valid Role role) {
         log.info("request from client {}", role);
         MessageResponse response = rolesService.addRole(role);

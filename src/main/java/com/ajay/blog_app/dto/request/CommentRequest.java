@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public class CommentRequest {
     private String comment;
     private LocalDateTime commentedDateTime;
-    private String userID;
-    private String postID;
+    private Long userID;
+    private Long postID;
 }

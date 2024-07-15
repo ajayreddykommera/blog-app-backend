@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class PostResponse {
 
-    private String postId;
+    private Long postId;
     private String postTitle;
     private String body;
     private List<String> tags;
@@ -16,5 +16,5 @@ public class PostResponse {
     private LocalDateTime modifiedAt;
     private List<CommentResponse> comments;
     private List<VoteResponse> likes;
-    private String userID;
+    private Long userID;
 }

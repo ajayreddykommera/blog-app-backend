@@ -1,10 +1,20 @@
 spring:
   application:
     name: blog-app
-
-mongo:
-  connectionString: mongodb+srv://ajay:ajay@dev-cluster.kkevhqw.mongodb.net/?retryWrites=true&w=majority&appName=dev-cluster
-  db_name: spring-security
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/blogApp
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update  # Changed from create to update for existing tables and data handling
+    properties:
+      hibernate:
+        default_schema: blogApp
+    show-sql: true  # Optional: Shows SQL in logs for debugging
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # Ensures correct dialect is used
+    format_sql: true  # Optional: Formats SQL in logs for readability
 
 app:
   security:

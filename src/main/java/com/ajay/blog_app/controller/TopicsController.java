@@ -36,7 +36,7 @@ public class TopicsController {
     }
 
     @DeleteMapping("/{topicId}")
-    public ResponseEntity<String> deleteTopic(@RequestParam("topicId") String topicId) {
+    public ResponseEntity<String> deleteTopic(@RequestParam("topicId") Long topicId) {
         boolean isDeleted = topicService.deleteTopic(topicId);
         if(isDeleted) {
             return new ResponseEntity<>("topic deleted successfully", HttpStatus.OK);

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class VoteResponse {
-    private String voteId;
+    private Long voteId;
     private boolean isLike;
-    private String userId;
-    private String postId;
+    private Long userId;
+    private Long postId;
 }

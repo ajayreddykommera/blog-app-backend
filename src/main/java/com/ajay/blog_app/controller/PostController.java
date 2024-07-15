@@ -25,13 +25,13 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @DeleteMapping("/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable("postId") String postId){
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId){
         boolean isDeleted=postService.deletePost(postId);
         return new ResponseEntity<>("post with post id {} deleted successfully"+postId, HttpStatus.OK);
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponse> getPostById(@PathVariable("postId") String postId) {
+    public ResponseEntity<PostResponse> getPostById(@PathVariable("postId") Long postId) {
         PostResponse response = postService.getPostById(postId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @GetMapping("/author/{authorId}")
-    public ResponseEntity<List<PostResponse>> getPostsByAuthor(@PathVariable("authorId") String authorId) {
+    public ResponseEntity<List<PostResponse>> getPostsByAuthor(@PathVariable("authorId") Long authorId) {
         List<PostResponse> response = postService.getPostsByAuthorId(authorId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -53,13 +53,13 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/topic/{topicId}")
-    public ResponseEntity<List<PostResponse>> getPostsByTopics(@PathVariable("topicId") String topicId) {
+    public ResponseEntity<List<PostResponse>> getPostsByTopics(@PathVariable("topicId") Long topicId) {
         List<PostResponse> response = postService.getPostsByTopic(topicId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<String> updatePost(@PathVariable String postId, @RequestBody PostRequest postRequest) {
+    public ResponseEntity<String> updatePost(@PathVariable Long postId, @RequestBody PostRequest postRequest) {
         boolean isUpdated = postService.updatePost(postId, postRequest);
         if (isUpdated) {
             return ResponseEntity.ok("Post updated successfully");

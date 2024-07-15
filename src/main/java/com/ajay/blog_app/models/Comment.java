@@ -1,27 +1,32 @@
 package com.ajay.blog_app.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "comments")
 @Data
-@Document(collection = "comments")
 public class Comment {
-    @Id
-    private String commentId;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long commentId;
+
+    @Column(nullable = false)
     private LocalDateTime commentedDateTime;
 
     @NotBlank
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String comment;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "commented_by")
     private User commentedBy;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
     private Post post;
 }

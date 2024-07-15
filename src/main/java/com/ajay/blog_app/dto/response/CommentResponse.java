@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class CommentResponse {
-    private String commentId;
+    private Long commentId;
     private String comment;
-    private String userID;
-    private String postID;
+    private Long userID;
+    private Long postID;
 }

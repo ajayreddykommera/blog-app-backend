@@ -47,7 +47,7 @@ public class VoteServiceImpl implements VoteService {
 
 
     @Override
-    public List<VoteResponse> getAllVotesByPostId(String postId) {
+    public List<VoteResponse> getAllVotesByPostId(Long postId) {
         List<Vote> voteList = voteRepository.findAllByPostPostId(postId);
         List<VoteResponse> voteResponseList = new LinkedList<>();
         for (Vote vote : voteList) {

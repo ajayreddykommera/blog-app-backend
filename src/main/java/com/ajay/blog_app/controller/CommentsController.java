@@ -31,13 +31,13 @@ public class CommentsController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentResponse>> getCommentsByPostId(@PathVariable("postId") String postId) {
+    public ResponseEntity<List<CommentResponse>> getCommentsByPostId(@PathVariable("postId") Long postId) {
         List<CommentResponse> commentResponseList = commentService.getCommentsByPostId(postId);
         return new ResponseEntity<>(commentResponseList, HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable("commentId") String commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long commentId) {
         boolean deleted = commentService.deleteComment(commentId);
         if (deleted) {
             return new ResponseEntity<>("commented deleted successfully", HttpStatus.OK);

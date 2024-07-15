@@ -26,7 +26,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public boolean deleteTopic(String topicId) {
+    public boolean deleteTopic(Long topicId) {
         try {
             topicRepository.deleteById(topicId);
             return true;

@@ -31,7 +31,7 @@ public class VoteController {
     }
 
     @GetMapping("/post/{postId}")
-    public ResponseEntity<List<VoteResponse>> getAllVotesByPostId(@PathVariable("postId") String postId) {
+    public ResponseEntity<List<VoteResponse>> getAllVotesByPostId(@PathVariable("postId") Long postId) {
         List<VoteResponse> voteResponses = voteService.getAllVotesByPostId(postId);
         return new ResponseEntity<>(voteResponses, HttpStatus.OK);
     }

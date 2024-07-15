@@ -8,7 +8,7 @@ import java.util.List;
 public interface TopicService {
     boolean addTopic(TopicRequest topicRequest);
 
-    boolean deleteTopic(String topicId);
+    boolean deleteTopic(Long topicId);
 
     List<Topic> getAllTopics();
 }

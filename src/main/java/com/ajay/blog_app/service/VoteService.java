@@ -8,5 +8,5 @@ import java.util.List;
 public interface VoteService {
     boolean vote(VoteRequest voteRequest);
 
-    List<VoteResponse> getAllVotesByPostId(String postId);
+    List<VoteResponse> getAllVotesByPostId(Long postId);
 }

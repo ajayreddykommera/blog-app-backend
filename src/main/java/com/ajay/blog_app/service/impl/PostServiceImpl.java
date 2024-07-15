@@ -42,14 +42,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getPostById(String postId) {
+    public PostResponse getPostById(Long postId) {
         return postRepository.findById(postId)
                 .map(this::buildPostResponse)
                 .orElseThrow(() -> new IllegalArgumentException("Post ID not found"));
     }
 
     @Override
-    public List<PostResponse> getPostsByAuthorId(String authorId) {
+    public List<PostResponse> getPostsByAuthorId(Long authorId) {
         return postRepository.findAllByAuthorUserId(authorId).stream()
                 .map(this::buildPostResponse)
                 .toList();
@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean updatePost(String postId, PostRequest postRequest) {
+    public boolean updatePost(Long postId, PostRequest postRequest) {
         return postRepository.findById(postId)
                 .map(post -> {
                     post.setPostTitle(postRequest.getPostTitle());
@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean deletePost(String postId) {
+    public boolean deletePost(Long postId) {
         try {
             postRepository.deleteById(postId);
             return true;
@@ -95,7 +95,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponse> getPostsByTopic(String topicId) {
+    public List<PostResponse> getPostsByTopic(Long topicId) {
         List<Post> postResponseList = postRepository.findAllByTopicTopicId(topicId);
         return postResponseList.stream()
                 .map(this::buildPostResponse)
@@ -124,7 +124,7 @@ public class PostServiceImpl implements PostService {
         return commentResponse;
     }
 
-    private List<CommentResponse> getCommentResponseList(String postId) {
+    private List<CommentResponse> getCommentResponseList(Long postId) {
         return commentRepository.findByPostPostId(postId).stream()
                 .map(this::buildCommentResponse)
                 .toList();

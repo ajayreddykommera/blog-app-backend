@@ -10,6 +10,6 @@ public class PostRequest {
     private String postTitle;
     private String body;
     private List<String> tags;
-    private String authorID;
-    private String topicId;
+    private Long authorID;
+    private Long topicId;
 }

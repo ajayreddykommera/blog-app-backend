@@ -8,18 +8,18 @@ import java.util.List;
 public interface PostService {
     String addPost(PostRequest postRequest);
 
-    PostResponse getPostById(String postId);
+    PostResponse getPostById(Long postId);
 
-    List<PostResponse> getPostsByAuthorId(String authorId);
+    List<PostResponse> getPostsByAuthorId(Long authorId);
 
     List<PostResponse> getPostsByTags(List<String> tags);
 
 
-    boolean updatePost(String postId, PostRequest postRequest);
+    boolean updatePost(Long postId, PostRequest postRequest);
 
     List<PostResponse> getAllPosts();
 
-    boolean deletePost(String postId);
+    boolean deletePost(Long postId);
 
-    List<PostResponse> getPostsByTopic(String topicId);
+    List<PostResponse> getPostsByTopic(Long topicId);
 }

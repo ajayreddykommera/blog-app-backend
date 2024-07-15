@@ -1,19 +1,22 @@
 package com.ajay.blog_app.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "topics")
+@Entity
+@Table(name = "topics")
 @Data
 public class Topic {
 
     @Id
-    private String topicId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long topicId;
+
+    @Column(nullable = false)
     private String topicName;
-    @DBRef
+
+    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 }

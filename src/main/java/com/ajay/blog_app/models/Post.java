@@ -1,47 +1,49 @@
 package com.ajay.blog_app.models;
 
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collection = "posts")
+@Entity
+@Table(name = "posts")
 @Data
 public class Post {
 
     @Id
-    private String postId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long postId;
 
     @NotBlank
-    @Indexed(unique = true)
+    @Column(nullable = false, unique = true)
     private String postTitle;
 
     @NotBlank
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
 
+    @ElementCollection
     private List<String> tags;
 
-    @Indexed
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
 
-    @DBRef(lazy = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @DBRef(lazy = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Vote> likes;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 
-    @DBRef
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
     private User author;
 }

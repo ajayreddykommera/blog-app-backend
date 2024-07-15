@@ -43,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean deleteComment(String commentId) {
+    public boolean deleteComment(Long commentId) {
         try {
             commentRepository.deleteById(commentId);
             return true;
@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentResponse> getCommentsByPostId(String postId) {
+    public List<CommentResponse> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostPostId(postId);
         List<CommentResponse> commentResponseList = new LinkedList<>();
         for (Comment comment : comments) {
