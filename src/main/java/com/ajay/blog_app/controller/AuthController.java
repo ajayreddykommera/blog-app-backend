@@ -2,8 +2,8 @@ package com.ajay.blog_app.controller;
 
 import com.ajay.blog_app.dto.request.LoginRequest;
 import com.ajay.blog_app.dto.request.SignupRequest;
-import com.ajay.blog_app.dto.response.JwtResponse;
 import com.ajay.blog_app.dto.response.MessageResponse;
+import com.ajay.blog_app.dto.response.SigninResponse;
 import com.ajay.blog_app.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<SigninResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         log.info("request to client {}", loginRequest);
-        JwtResponse response = authService.authenticateUser(loginRequest);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        SigninResponse response = authService.authenticateUser(loginRequest);
+        if (response.getCode() == 1) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
     }
 
     @PostMapping("/signup")
@@ -35,7 +39,11 @@ public class AuthController {
         log.info("request to client {}", signUpRequest);
         MessageResponse response = authService.registerUser(signUpRequest);
         log.info("response to client {}", response);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        if (response.getCode() == 1) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
     }
 
 }
