@@ -4,6 +4,7 @@ import com.ajay.blog_app.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -37,8 +38,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) ->
                         requests
                                 .requestMatchers("/api/auth/signup", "/api/auth/signin").permitAll()
-                                .requestMatchers("/api/roles/**").permitAll()
                                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
@@ -57,3 +58,4 @@ public class SecurityConfig {
     }
 
 }
+

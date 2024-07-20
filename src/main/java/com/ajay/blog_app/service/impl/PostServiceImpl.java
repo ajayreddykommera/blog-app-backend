@@ -2,6 +2,7 @@ package com.ajay.blog_app.service.impl;
 
 import com.ajay.blog_app.dto.request.PostRequest;
 import com.ajay.blog_app.dto.response.CommentResponse;
+import com.ajay.blog_app.dto.response.MessageResponse;
 import com.ajay.blog_app.dto.response.PostResponse;
 import com.ajay.blog_app.models.Comment;
 import com.ajay.blog_app.models.Post;
@@ -28,7 +29,8 @@ public class PostServiceImpl implements PostService {
     public String addPost(PostRequest postRequest) {
         Post post = new Post();
         post.setPostTitle(postRequest.getPostTitle());
-        post.setBody(postRequest.getBody());
+        post.setPostSummary(postRequest.getPostSummary());
+        post.setPostBody(postRequest.getPostBody());
         post.setCreatedAt(LocalDateTime.now());
         post.setTags(postRequest.getTags());
         User author = new User();
@@ -68,7 +70,8 @@ public class PostServiceImpl implements PostService {
         return postRepository.findById(postId)
                 .map(post -> {
                     post.setPostTitle(postRequest.getPostTitle());
-                    post.setBody(postRequest.getBody());
+                    post.setPostBody(postRequest.getPostBody());
+                    post.setPostSummary(postRequest.getPostSummary());
                     post.setTags(postRequest.getTags());
                     post.setModifiedAt(LocalDateTime.now());
                     postRepository.save(post);
@@ -85,13 +88,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean deletePost(Long postId) {
+    public MessageResponse deletePost(Long postId) {
+        MessageResponse response = new MessageResponse();
         try {
-            postRepository.deleteById(postId);
-            return true;
+            boolean existsById = postRepository.existsById(postId);
+            if (existsById) {
+                postRepository.deleteById(postId);
+                response.setCode(0);
+                response.setMessage("post with post id " + postId + " deleted successfully");
+            } else {
+                response.setCode(1);
+                response.setMessage("Post with post id " + postId + " not found");
+            }
         } catch (Exception e) {
+            response.setCode(1);
+            response.setMessage("Something went wrong while deleting post");
             throw new RuntimeException(e);
         }
+        return response;
     }
 
     @Override
@@ -107,8 +121,9 @@ public class PostServiceImpl implements PostService {
         postResponse.setUserID(post.getAuthor().getUserId());
         postResponse.setPostId(post.getPostId());
         postResponse.setTags(post.getTags());
-        postResponse.setBody(post.getBody());
+        postResponse.setPostBody(post.getPostBody());
         postResponse.setPostTitle(post.getPostTitle());
+        postResponse.setPostSummary(post.getPostSummary());
         postResponse.setCreatedAt(post.getCreatedAt());
         postResponse.setModifiedAt(post.getModifiedAt());
         postResponse.setComments(getCommentResponseList(post.getPostId()));

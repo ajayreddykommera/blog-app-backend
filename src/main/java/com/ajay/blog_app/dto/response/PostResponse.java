@@ -10,7 +10,8 @@ public class PostResponse {
 
     private Long postId;
     private String postTitle;
-    private String body;
+    private String postBody;
+    private String postSummary;
     private List<String> tags;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

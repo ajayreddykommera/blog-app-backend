@@ -23,7 +23,11 @@ public class Post {
 
     @NotBlank
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String body;
+    private String postBody;
+
+    @NotBlank
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String postSummary;
 
     @ElementCollection
     private List<String> tags;

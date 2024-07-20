@@ -1,5 +1,6 @@
 package com.ajay.blog_app.service;
 
+import com.ajay.blog_app.dto.response.MessageResponse;
 import com.ajay.blog_app.dto.response.PostResponse;
 import com.ajay.blog_app.dto.request.PostRequest;
 
@@ -19,7 +20,7 @@ public interface PostService {
 
     List<PostResponse> getAllPosts();
 
-    boolean deletePost(Long postId);
+    MessageResponse deletePost(Long postId);
 
     List<PostResponse> getPostsByTopic(Long topicId);
 }

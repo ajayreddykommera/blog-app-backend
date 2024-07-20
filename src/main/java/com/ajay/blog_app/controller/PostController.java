@@ -1,8 +1,9 @@
 package com.ajay.blog_app.controller;
 
+import com.ajay.blog_app.dto.request.PostRequest;
+import com.ajay.blog_app.dto.response.MessageResponse;
 import com.ajay.blog_app.dto.response.PostResponse;
 import com.ajay.blog_app.service.PostService;
-import com.ajay.blog_app.dto.request.PostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,17 +25,13 @@ public class PostController {
         String response = postService.addPost(postRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId){
-        boolean isDeleted=postService.deletePost(postId);
-        return new ResponseEntity<>("post with post id {} deleted successfully"+postId, HttpStatus.OK);
-    }
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPostById(@PathVariable("postId") Long postId) {
         PostResponse response = postService.getPostById(postId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<List<PostResponse>> getAllPosts() {
         List<PostResponse> response = postService.getAllPosts();
@@ -52,6 +49,7 @@ public class PostController {
         List<PostResponse> response = postService.getPostsByTags(tags);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @GetMapping("/topic/{topicId}")
     public ResponseEntity<List<PostResponse>> getPostsByTopics(@PathVariable("topicId") Long topicId) {
         List<PostResponse> response = postService.getPostsByTopic(topicId);
@@ -65,6 +63,20 @@ public class PostController {
             return ResponseEntity.ok("Post updated successfully");
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<MessageResponse> deletePostById(@PathVariable("postId") Long postId) {
+        MessageResponse response = postService.deletePost(postId);
+        try {
+            if (response.getCode() == 0) {
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
